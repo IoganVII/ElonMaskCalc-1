@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EM.Calc.ConsoleApp
+﻿namespace EM.Calc.ConsoleApp
 {
     class Program
     {
+        // "1+1"
+        // sum 12 32 34
         static void Main(string[] args)
         {
         }
