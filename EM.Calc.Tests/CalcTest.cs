@@ -19,5 +19,21 @@ namespace EM.Calc.Tests
             // assert
             Assert.AreEqual(sum, result);
         }
+
+        [TestMethod]
+        public void TestPiu()
+        {
+
+            // arrange
+            var calc = new Core.Calc();
+            var piu = 30;
+
+            // act
+            var result = calc.Piu(new[] { 5d, 3, 2 });
+
+            // assert
+            Assert.AreEqual(piu, result);
+        }
+
     }
 }
