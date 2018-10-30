@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
+using EM.Calc.Core;
 
 namespace EM.Calc.ConsoleApp
 {
@@ -13,6 +15,16 @@ namespace EM.Calc.ConsoleApp
             string operation;
 
             var calc = new Core.Calc();
+
+            // найти файл с операцией
+            // загрузить этот файл
+
+            // найти в нем операцию
+            var type = typeof(SumOperation);
+            var memebers = type.GetMembers();
+            
+            // добавить операцию в калькулятор
+
 
             string[] operations = calc.Operations
                 .Select(o => o.Name)

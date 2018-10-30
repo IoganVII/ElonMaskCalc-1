@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace EM.Calc.Core
 {
@@ -8,15 +10,34 @@ namespace EM.Calc.Core
         /// <summary>
         /// Операции
         /// </summary>
-        public IOperation[] Operations { get; set; }
+        public IList<IOperation> Operations { get; set; }
 
         public Calc()
         {
-            Operations = new IOperation[]
+            Operations = new List<IOperation>();
+            
+            // получить текущую сборку
+            var asm = Assembly.GetExecutingAssembly();
+            
+            // загрузить все типы из сборки
+            var types = asm.GetTypes();
+
+            // перебираем все классы в сборке
+            foreach (var item in types)
             {
-                new SumOperation(),
-                new NewOperation()
-            };
+                // если класс реализаует заданный интерфейс
+                if(item.GetInterface("IOperation") != null)
+                {
+                    //добавляем в операции экземпляр данного класса
+                    var instance = Activator.CreateInstance(item);
+
+                    var operation = instance as IOperation;
+                    if (operation != null)
+                    {
+                        Operations.Add(operation);
+                    }
+                }
+            }
         }
 
         public double? Execute(string operName, double[] values)
