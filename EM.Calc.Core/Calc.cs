@@ -29,5 +29,10 @@ namespace EM.Calc.Core
         {
             return args.Aggregate((a, b) => a * b);
         }
+
+        public double New(double[] args)
+        {
+            return Double.PositiveInfinity;
+        }
     }
 }

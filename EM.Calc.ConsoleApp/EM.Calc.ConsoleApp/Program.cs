@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace EM.Calc.ConsoleApp
 {
@@ -8,24 +9,55 @@ namespace EM.Calc.ConsoleApp
         // sum 12 32 34
         static void Main(string[] args)
         {
-            double[] mass = ConvertToDouble(args);
+            double[] values;
+            string operation;
+
+            string[] operations = new[] { "sum", "sub", "piu", "new" };
+
+
             var calc = new Core.Calc();
 
-            var oper = args[0].ToLower();
+            if(args.Length == 0)
+            {
+                Console.WriteLine("Список операций:");
+                
+                foreach (var item in operations)
+                {
+                    Console.WriteLine(item);
+                }
+                Console.WriteLine("Введите операцию: ");
 
-            switch (oper)
+
+                operation = Console.ReadLine();
+
+                Console.WriteLine("Введите аргументы через пробел: ");
+                var operands = Console.ReadLine();
+                values = ConvertToDouble(
+                    operands.Split(new[] { " ", ";" }, StringSplitOptions.RemoveEmptyEntries)
+                );
+            }
+            else
+            {
+                operation = args[0].ToLower();
+                values = ConvertToDouble(args, 1);
+            }
+            
+            switch (operation)
             {
                 case "sum":
-                    Console.WriteLine(calc.Sum(mass));
+                    Console.WriteLine(calc.Sum(values));
                     break;
                 case "sub":
-                    Console.WriteLine(calc.Sub(mass));
+                    Console.WriteLine(calc.Sub(values));
                     break;
                 case "pow":
-                    Console.WriteLine(calc.Pow(mass));
+                    Console.WriteLine(calc.Pow(values));
                     break;
                 case "piu":
-                    Console.WriteLine(calc.Piu(mass));
+                    Console.WriteLine(calc.Piu(values));
+                    break;
+                case "new":
+                    Console.WriteLine(calc.New(values));
                     break;
                 default:
                     Console.WriteLine("Фатал еррор");
@@ -34,15 +66,12 @@ namespace EM.Calc.ConsoleApp
             Console.Read();
         }
 
-        private static double[] ConvertToDouble(string[] args)
+        private static double[] ConvertToDouble(string[] args, int start = 0)
         {
-            double[] mass = new double[args.Length - 1];
-            int j = 0;
-            for (int i = 1; i < args.Length; i++, j++)
-            {
-                mass[j] = Convert.ToDouble(args[i]);
-            }
-            return mass;
+            return args
+                .Skip(start)
+                .Select(Convert.ToDouble)
+                .ToArray();
         }
     }
 }
