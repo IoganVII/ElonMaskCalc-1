@@ -5,11 +5,44 @@ namespace EM.Calc.Core
 {
     public class Calc
     {
+        /// <summary>
+        /// Операции
+        /// </summary>
+        public IOperation[] Operations { get; set; }
+
+        public Calc()
+        {
+            Operations = new IOperation[]
+            {
+                new SumOperation(),
+                new NewOperation()
+            };
+        }
+
+        public double? Execute(string operName, double[] values)
+        {
+            foreach (var item in Operations)
+            {
+                if (item.Name == operName)
+                {
+                    item.Operands = values;
+
+                    item.Execute();
+
+                    return item.Result;
+                }
+            }
+
+            return null;
+        }
+
+
         public int Sum(int[] args)
         {
             return args.Sum();
         }
 
+        [Obsolete("Не используйте это, есть же Execute")]
         public double Sum(double[] args)
         {
             return args.Sum();
