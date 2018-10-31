@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -15,18 +16,30 @@ namespace EM.Calc.Core
         public Calc()
         {
             Operations = new List<IOperation>();
-            
-            // получить текущую сборку
-            var asm = Assembly.GetExecutingAssembly();
-            
+
+            var path = Environment.CurrentDirectory;
+
+            var dllFiles = Directory.GetFiles(path, "*.dll", SearchOption.AllDirectories);
+            foreach (var file in dllFiles)
+            {
+                LoadOperations(Assembly.LoadFrom(file));
+            }
+        }
+
+        private void LoadOperations(Assembly assembly)
+        {
             // загрузить все типы из сборки
-            var types = asm.GetTypes();
+            var types = assembly.GetTypes();
+
+            var needType = typeof(IOperation);
 
             // перебираем все классы в сборке
             foreach (var item in types)
             {
+                var interfaces = item.GetInterfaces();
+
                 // если класс реализаует заданный интерфейс
-                if(item.GetInterface("IOperation") != null)
+                if (interfaces.Contains(needType))
                 {
                     //добавляем в операции экземпляр данного класса
                     var instance = Activator.CreateInstance(item);
@@ -57,6 +70,9 @@ namespace EM.Calc.Core
             return null;
         }
 
+        #region Old
+
+        
 
         public int Sum(int[] args)
         {
@@ -88,5 +104,7 @@ namespace EM.Calc.Core
         {
             return Double.PositiveInfinity;
         }
+
+        #endregion
     }
 }
