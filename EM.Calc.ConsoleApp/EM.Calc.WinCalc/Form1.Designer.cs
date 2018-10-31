@@ -70,6 +70,7 @@
             this.btnExec.TabIndex = 3;
             this.btnExec.Text = "Вычислить";
             this.btnExec.UseVisualStyleBackColor = true;
+            this.btnExec.Click += new System.EventHandler(this.btnExec_Click);
             // 
             // button2
             // 
@@ -120,8 +121,12 @@
             this.Controls.Add(this.tbInput);
             this.Controls.Add(this.lblResult);
             this.Controls.Add(this.cbOperation);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Калькулятор";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
