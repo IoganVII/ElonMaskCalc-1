@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
+using EM.Calc.Core;
 
 namespace EM.Calc.ConsoleApp
 {
@@ -8,41 +11,63 @@ namespace EM.Calc.ConsoleApp
         // sum 12 32 34
         static void Main(string[] args)
         {
-            double[] mass = ConvertToDouble(args);
+            double[] values;
+            string operation;
+
             var calc = new Core.Calc();
 
-            var oper = args[0].ToLower();
+            // найти файл с операцией
+            // загрузить этот файл
 
-            switch (oper)
+            // найти в нем операцию
+            var type = typeof(SumOperation);
+            var memebers = type.GetMembers();
+            
+            // добавить операцию в калькулятор
+
+
+            string[] operations = calc.Operations
+                .Select(o => o.Name)
+                .ToArray();
+
+            if (args.Length == 0)
             {
-                case "sum":
-                    Console.WriteLine(calc.Sum(mass));
-                    break;
-                case "sub":
-                    Console.WriteLine(calc.Sub(mass));
-                    break;
-                case "pow":
-                    Console.WriteLine(calc.Pow(mass));
-                    break;
-                case "piu":
-                    Console.WriteLine(calc.Piu(mass));
-                    break;
-                default:
-                    Console.WriteLine("Фатал еррор");
-                    break;
+                Console.WriteLine("Список операций:");
+
+                foreach (var item in operations)
+                {
+                    Console.WriteLine(item);
+                }
+                Console.WriteLine("Введите операцию: ");
+
+
+                operation = Console.ReadLine();
+
+                Console.WriteLine("Введите аргументы через пробел: ");
+                var operands = Console.ReadLine();
+                values = ConvertToDouble(
+                    operands.Split(new[] { " ", ";" }, StringSplitOptions.RemoveEmptyEntries)
+                );
             }
-            Console.Read();
+            else
+            {
+                operation = args[0].ToLower();
+                values = ConvertToDouble(args, 1);
+            }
+
+            var result = calc.Execute(operation, values);
+
+            Console.WriteLine(result);
+
+            Console.ReadKey();
         }
 
-        private static double[] ConvertToDouble(string[] args)
+        private static double[] ConvertToDouble(string[] args, int start = 0)
         {
-            double[] mass = new double[args.Length - 1];
-            int j = 0;
-            for (int i = 1; i < args.Length; i++, j++)
-            {
-                mass[j] = Convert.ToDouble(args[i]);
-            }
-            return mass;
+            return args
+                .Skip(start)
+                .Select(Convert.ToDouble)
+                .ToArray();
         }
     }
 }
