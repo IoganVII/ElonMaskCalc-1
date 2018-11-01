@@ -13,11 +13,20 @@ namespace EM.Calc.Web.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult About(long? id, string r)
         {
             ViewBag.Message = "Your application description page.";
 
-            return View();
+            var pp = new[] { 1, 2, 3 };
+
+            var id1 = Request.Form["id"];
+            var id2 = Request.QueryString["id"];
+            var id3 = Request.Cookies["id"];
+            var id4 = Request.Files["id"];
+
+            ViewBag.Вася = $"{r} => {id}";
+
+            return View("Contact");
         }
 
         public ActionResult Contact()
