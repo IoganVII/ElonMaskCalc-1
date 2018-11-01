@@ -34,7 +34,7 @@ namespace EM.Calc.Core
             var needType = typeof(IOperation);
 
             // перебираем все классы в сборке
-            foreach (var item in types)
+            foreach (var item in types.Where(t => t.IsClass && !t.IsAbstract))
             {
                 var interfaces = item.GetInterfaces();
 
@@ -72,7 +72,7 @@ namespace EM.Calc.Core
 
         #region Old
 
-        
+
 
         public int Sum(int[] args)
         {
