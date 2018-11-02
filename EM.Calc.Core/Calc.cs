@@ -13,18 +13,34 @@ namespace EM.Calc.Core
         /// </summary>
         public IList<IOperation> Operations { get; set; }
 
-        public Calc()
+        public Calc() : this("")
+        {
+        }
+
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="path">Путь до сторонних библиотек с операциями</param>
+        public Calc(string path)
         {
             Operations = new List<IOperation>();
 
-            var path = Environment.CurrentDirectory;
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                path = Environment.CurrentDirectory;
+            }
+            else
+            {
+                LoadOperations(Assembly.GetExecutingAssembly());
+            }
 
-            var dllFiles = Directory.GetFiles(path, "*.dll", SearchOption.AllDirectories);
+            var dllFiles = Directory.GetFiles(path, "*.dll", SearchOption.TopDirectoryOnly);
             foreach (var file in dllFiles)
             {
                 LoadOperations(Assembly.LoadFrom(file));
             }
         }
+
 
         private void LoadOperations(Assembly assembly)
         {
