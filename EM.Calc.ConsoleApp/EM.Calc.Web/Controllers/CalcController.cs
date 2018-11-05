@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using EM.Calc.Web.Models;
 
@@ -27,7 +24,12 @@ namespace EM.Calc.Web.Controllers
         [HttpGet]
         public ActionResult Input()
         {
-            return View();
+            var model = new InputModel
+            {
+                Operations = calc.Operations
+            };
+
+            return View(model);
         }
 
         [HttpPost]

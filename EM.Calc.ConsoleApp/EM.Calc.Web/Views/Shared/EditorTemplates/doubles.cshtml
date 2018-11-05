@@ -2,13 +2,13 @@
 
 @if (Model == null)
 {
-    <input type="number" name="Args1" class="form-control" />
-    <input type="number" name="Args1" class="form-control" />
-    <input type="number" name="Args1" class="form-control" />
+    <input type="number" name="@Html.NameForModel()" class="form-control" />
     return;
 }
-
-@foreach (var item in Model)
+else
 {
-    <input type="number" name="Args1" value="@item" class="form-control" />
+    foreach (var item in Model)
+    {
+        <input type="number" name="@Html.NameForModel()" value="@item" class="form-control" />
+    }
 }
