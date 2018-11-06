@@ -33,22 +33,22 @@ namespace EM.Calc.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Input(InputModel model)
+        public PartialViewResult Input(InputModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return null;
             }
 
             if (!calc.Operations.Any(m => m.Name == model.Name))
             {
                 ModelState.AddModelError("", "Такой операции нет");
-                return View(model);
+                return null;
             }
 
             var result = Calc(model.Name, model.Args1);
 
-            return View("Execute", result);
+            return PartialView("Execute", result);
         }
 
         private OperationResult Calc(string oper, double[] args)
