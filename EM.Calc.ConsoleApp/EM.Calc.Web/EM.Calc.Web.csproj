@@ -149,6 +149,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CalcController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DB\DBHelper.cs" />
     <Compile Include="Extentions\Helpers.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -158,6 +159,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\ElonMusk.mdf" />
+    <Content Include="App_Data\ElonMusk_log.ldf">
+      <DependentUpon>ElonMusk.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -200,9 +205,7 @@
     <Content Include="Views\Shared\EditorTemplates\doubles.cshtml" />
     <Content Include="Views\Shared\Now.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -220,6 +223,10 @@
     <ProjectReference Include="..\..\EM.Calc.Core\EM.Calc.Core.csproj">
       <Project>{197687b0-c6f3-4623-9310-19f69535feb4}</Project>
       <Name>EM.Calc.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EM.Calc.DB\EM.Calc.DB.csproj">
+      <Project>{3819FCD3-AAD9-4609-890C-2480B72D8A72}</Project>
+      <Name>EM.Calc.DB</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
