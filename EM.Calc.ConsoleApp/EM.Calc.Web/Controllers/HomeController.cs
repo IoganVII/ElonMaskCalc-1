@@ -10,13 +10,11 @@ namespace EM.Calc.Web.Controllers
 {
     public class HomeController : Controller
     {
-        string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\ElonMaskCalc\EM.Calc.ConsoleApp\EM.Calc.Web\App_Data\ElonMusk.mdf;Integrated Security=True";
-
-        UserRepository UserRepository;
+        IEntityRepository<User> UserRepository;
 
         public HomeController()
         {
-            UserRepository = new UserRepository(connString);
+            UserRepository = new NHUserRepository();
         }
 
         public ActionResult Index()

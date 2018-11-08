@@ -9,13 +9,11 @@ namespace EM.Calc.Web.Controllers
 {
     public class OperationResultController : Controller
     {
-        string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\ElonMaskCalc\EM.Calc.ConsoleApp\EM.Calc.Web\App_Data\ElonMusk.mdf;Integrated Security=True";
-
-        OperationResultRepository OperationResultRepository;
+        IEntityRepository<OperationResult> OperationResultRepository;
 
         public OperationResultController()
         {
-            OperationResultRepository = new OperationResultRepository(connString);
+            OperationResultRepository = new NHOperationResultRepository();
         }
 
         // GET: OperationResult
