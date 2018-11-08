@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using EM.Calc.Web.Models;
 
@@ -8,8 +9,16 @@ namespace EM.Calc.Web.Controllers
     {
         private Core.Calc calc;
 
+        string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\ElonMaskCalc\EM.Calc.ConsoleApp\EM.Calc.Web\App_Data\ElonMusk.mdf;Integrated Security=True";
+
+        EM.Calc.DB.OperationResultRepository OperationResultRepository;
+
+        EM.Calc.DB.IOperationRepository OperationRepository;
+
         public CalcController()
         {
+            OperationResultRepository = new EM.Calc.DB.OperationResultRepository(connString);
+            OperationRepository = new EM.Calc.DB.OperationRepository(connString);
             calc = new Core.Calc(@"D:\temp");
         }
 
@@ -54,6 +63,20 @@ namespace EM.Calc.Web.Controllers
         private OperationResult Calc(string oper, double[] args)
         {
             var result = calc.Execute(oper, args);
+
+            var operation = OperationRepository.LoadByName(oper);
+
+            OperationResultRepository.Save(new EM.Calc.DB.OperationResult()
+            {
+                UserId = 3,
+                ExecTime = new Random().Next(1, 1000),
+
+                OperationId = operation.Id,
+                CreationDate = DateTime.Now,
+                Status = EM.Calc.DB.OperationResultStatus.DONE,
+                Result = result ?? double.NaN,
+                Args = string.Join(" ", args)
+            });
 
             return new OperationResult()
             {

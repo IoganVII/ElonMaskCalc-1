@@ -149,6 +149,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CalcController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OperationResultController.cs" />
     <Compile Include="DB\DBHelper.cs" />
     <Compile Include="Extentions\Helpers.cs" />
     <Compile Include="Global.asax.cs">
@@ -204,6 +205,7 @@
     <Content Include="Views\Calc\Input.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\doubles.cshtml" />
     <Content Include="Views\Shared\Now.cshtml" />
+    <Content Include="Views\OperationResult\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
